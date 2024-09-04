@@ -1,0 +1,12 @@
+.display {
+  width: 500px;
+  height: 100px;
+  background-color: #000;
+  color: #fff;
+  font-size: 3rem;
+  text-align: right;
+}
+
+button {
+  font-size: 2rem;
+}
