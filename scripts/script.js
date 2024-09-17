@@ -1,55 +1,58 @@
-let calculator = {
-  displayValue: "0",
-  operator: null,
-  firstOperand: 0,
-  secondOperand: 0,
-  result: 0,
-};
+let calculator = {};
 
+const resetCalculator = () => {
+  calculator = {
+    displayValue: "0",
+    operator: null,
+    firstOperand: null,
+    secondOperand: null,
+    result: 0,
+  };
+};
 const updateDisplay = () => (display.textContent = calculator.displayValue);
 
 function handleButtonEvent(event) {
   const button = event.target;
-  const buttonValue = event.target.value;
-
   if (button.classList.contains("number")) {
-    if (calculator.displayValue === "0") {
-      calculator.displayValue = buttonValue;
-    } else {
-      calculator.displayValue += buttonValue;
-    }
-    updateDisplay();
+    handleNumberButton(button.value);
   }
 
   if (button.classList.contains("operator")) {
-    calculator.operator = buttonValue;
-    calculator.firstOperand = parseInt(calculator.displayValue);
-    calculator.displayValue = "0";
-    updateDisplay();
+    handleOperatorButton(button.value);
   }
 
   if (button.classList.contains("equalsSign")) {
-    calculator.secondOperand = parseInt(calculator.displayValue);
-    calculator.result = calculate(
-      calculator.operator,
-      calculator.firstOperand,
-      calculator.secondOperand
-    );
-
-    calculator.displayValue = calculator.result;
-    updateDisplay();
+    handleEqualsButton();
   }
 
   if (button.classList.contains("clear")) {
-    calculator = {
-      displayValue: "0",
-      operator: null,
-      firstOperand: 0,
-      secondOperand: 0,
-      result: 0,
-    };
-    updateDisplay();
+    resetCalculator();
   }
+  updateDisplay();
+}
+
+function handleNumberButton(buttonValue) {
+  if (calculator.displayValue === "0") {
+    calculator.displayValue = buttonValue;
+  } else {
+    calculator.displayValue += buttonValue;
+  }
+}
+
+function handleOperatorButton(buttonValue) {
+  calculator.operator = buttonValue;
+  calculator.firstOperand = parseInt(calculator.displayValue);
+  calculator.displayValue = "0";
+}
+
+function handleEqualsButton() {
+  calculator.secondOperand = parseInt(calculator.displayValue);
+  calculator.result = calculate(
+    calculator.operator,
+    calculator.firstOperand,
+    calculator.secondOperand
+  );
+  calculator.displayValue = calculator.result;
 }
 
 const add = (x, y) => x + y;
@@ -78,10 +81,15 @@ function calculate(operator, operand1, operand2) {
   return result;
 }
 
+// DOM
 const display = document.querySelector(".display");
-display.textContent = calculator.displayValue;
-
 const buttons = document.querySelectorAll("button");
+
+// Listeners
 buttons.forEach((button) => {
   button.addEventListener("click", handleButtonEvent);
 });
+
+// Initial values
+resetCalculator();
+display.textContent = calculator.displayValue;
