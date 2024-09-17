@@ -28,6 +28,14 @@ function handleButtonEvent(event) {
   if (button.classList.contains("clear")) {
     resetCalculator();
   }
+
+  if (button.classList.contains("dot")) {
+    handleDecimalButton();
+  }
+
+  if (button.classList.contains("signal")) {
+    calculator.displayValue = toggleSignal();
+  }
   updateDisplay();
 }
 
@@ -40,19 +48,47 @@ function handleNumberButton(buttonValue) {
 }
 
 function handleOperatorButton(buttonValue) {
+  if (calculator.firstOperand === null) {
+    calculator.firstOperand = Number(calculator.displayValue);
+  }
+
+  if (calculator.firstOperand !== null && calculator.secondOperand !== null) {
+    calculator.result = calculate(
+      calculator.operator,
+      calculator.firstOperand,
+      calculator.secondOperand
+    );
+  }
   calculator.operator = buttonValue;
-  calculator.firstOperand = parseInt(calculator.displayValue);
   calculator.displayValue = "0";
 }
 
 function handleEqualsButton() {
-  calculator.secondOperand = parseInt(calculator.displayValue);
+  calculator.secondOperand = Number(calculator.displayValue);
   calculator.result = calculate(
     calculator.operator,
     calculator.firstOperand,
     calculator.secondOperand
   );
   calculator.displayValue = calculator.result;
+}
+
+function handleDecimalButton() {
+  if (!calculator.displayValue.includes(".")) {
+    calculator.displayValue += ".";
+  }
+}
+
+function toggleSignal() {
+  if (calculator.displayValue.startsWith("-")) {
+    return calculator.displayValue.replace("-", "");
+  }
+
+  if (calculator.displayValue === "0") {
+    return calculator.displayValue;
+  } else {
+    return "-" + calculator.displayValue;
+  }
 }
 
 const add = (x, y) => x + y;
@@ -73,6 +109,7 @@ function calculate(operator, operand1, operand2) {
       result = multiply(operand1, operand2);
       break;
     case "/":
+      if (operand2 === "0") return "LOL";
       result = divide(operand1, operand2);
       break;
     default:
