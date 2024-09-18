@@ -1,20 +1,9 @@
 let calculator = {};
 
-const resetCalculator = () => {
-  calculator = {
-    displayValue: "0",
-    operator: null,
-    firstOperand: null,
-    secondOperand: null,
-    result: 0,
-  };
-};
-const updateDisplay = () => (display.textContent = calculator.displayValue);
-
 function handleButtonEvent(event) {
   const button = event.target;
   if (button.classList.contains("number")) {
-    handleNumberButton(button.value);
+    concatNumber(button.value);
   }
 
   if (button.classList.contains("operator")) {
@@ -30,7 +19,7 @@ function handleButtonEvent(event) {
   }
 
   if (button.classList.contains("dot")) {
-    handleDecimalButton();
+    handleDecimalPoint();
   }
 
   if (button.classList.contains("signal")) {
@@ -39,7 +28,7 @@ function handleButtonEvent(event) {
   updateDisplay();
 }
 
-function handleNumberButton(buttonValue) {
+function concatNumber(buttonValue) {
   if (calculator.displayValue === "0") {
     calculator.displayValue = buttonValue;
   } else {
@@ -73,7 +62,7 @@ function handleEqualsButton() {
   calculator.displayValue = calculator.result;
 }
 
-function handleDecimalButton() {
+function handleDecimalPoint() {
   if (!calculator.displayValue.includes(".")) {
     calculator.displayValue += ".";
   }
@@ -113,10 +102,22 @@ function calculate(operator, operand1, operand2) {
       result = divide(operand1, operand2);
       break;
     default:
-      result = calculator.displayValue;
+      result = Number(calculator.displayValue);
   }
-  return result;
+  return Math.round(result * 100) / 100;
 }
+
+const resetCalculator = () => {
+  calculator = {
+    displayValue: "0",
+    operator: null,
+    firstOperand: null,
+    secondOperand: null,
+    result: 0,
+  };
+};
+
+const updateDisplay = () => (display.textContent = calculator.displayValue);
 
 // DOM
 const display = document.querySelector(".display");
