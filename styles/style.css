@@ -1,12 +1,106 @@
+/* Colors */
+:root {
+  --background: #010101;
+  --background-button: #171717;
+  --background-button-active: #444;
+  --background-equals: #318607;
+  --background-equals-active: #599d38;
+  --font-color1: #fafafa;
+  --font-color2: #6bd239;
+  --font-color3: #fe7674;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.calculator {
+  height: 800px;
+  width: 450px;
+  padding: 10px;
+  background-color: var(--background);
+  border-radius: 10px;
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+button,
 .display {
-  width: 500px;
-  height: 100px;
-  background-color: #000;
-  color: #fff;
-  font-size: 3rem;
+  font-family: sans-serif;
+  font-weight: bold;
+  color: var(--font-color1);
+}
+
+.display {
+  display: block;
+  height: 30%;
+  font-size: 5rem;
+  background-color: var(--background);
+  color: var(--font-color1);
   text-align: right;
 }
 
+.container {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: end;
+}
+
 button {
+  height: 100px;
+  width: 100px;
+  background-color: var(--background-button);
+  margin: 0;
+  padding: 0;
   font-size: 2rem;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+}
+
+button:active {
+  background-color: var(--background-button-active);
+}
+
+.equalsSign {
+  background-color: var(--background-equals);
+}
+
+.equalsSign:active {
+  background-color: var(--background-equals-active);
+}
+
+.clear,
+.all-clear {
+  color: var(--font-color3);
+}
+
+.operator {
+  color: var(--font-color2);
+}
+
+/* Mobile */
+@media screen and (max-width: 480px) {
+  .calculator {
+    height: 650px;
+    width: 350px;
+    box-shadow: none;
+  }
+
+  .display {
+    height: 35%;
+    width: 90%;
+  }
+
+  button {
+    height: 70px;
+    width: 70px;
+  }
 }
