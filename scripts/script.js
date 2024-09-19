@@ -25,6 +25,11 @@ function handleButtonEvent(event) {
   if (button.classList.contains("signal")) {
     calculator.displayValue = toggleSignal();
   }
+
+  if (button.classList.contains("percent")) {
+    calculator.displayValue /= 100;
+  }
+
   updateDisplay();
 }
 
