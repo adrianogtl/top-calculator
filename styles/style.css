@@ -88,6 +88,10 @@ button:active {
 
 /* Mobile */
 @media screen and (max-width: 480px) {
+  body {
+    background-color: var(--background);
+  }
+
   .calculator {
     height: 650px;
     width: 350px;
@@ -95,6 +99,7 @@ button:active {
   }
 
   .display {
+    font-size: 3rem;
     height: 35%;
     width: 90%;
   }
