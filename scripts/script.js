@@ -32,33 +32,47 @@ function concatNumber(buttonValue) {
   if (calculator.displayValue === "0") {
     calculator.displayValue = buttonValue;
   } else {
+    if (calculator.operator !== null) {
+      calculator.displayValue = "";
+    }
     calculator.displayValue += buttonValue;
   }
 }
 
 function handleOperatorButton(buttonValue) {
-  if (calculator.firstOperand === null) {
-    calculator.firstOperand = Number(calculator.displayValue);
+  if (calculator.operator === null) {
+    calculator.operator = buttonValue;
+    if (calculator.firstOperand === null) {
+      calculator.firstOperand = Number(calculator.displayValue);
+    } else if (calculator.secondOperand === null) {
+      calculator.secondOperand = Number(calculator.displayValue);
+    }
+  } else {
+    if (calculator.secondOperand === null) {
+      calculator.secondOperand = Number(calculator.displayValue);
+      handleEqualsButton();
+      calculator.operator = buttonValue;
+      return;
+    }
   }
-
-  if (calculator.firstOperand !== null && calculator.secondOperand !== null) {
-    calculator.result = calculate(
-      calculator.operator,
-      calculator.firstOperand,
-      calculator.secondOperand
-    );
-  }
-  calculator.operator = buttonValue;
   calculator.displayValue = "0";
 }
 
 function handleEqualsButton() {
-  calculator.secondOperand = Number(calculator.displayValue);
+  if (calculator.secondOperand === null) {
+    calculator.secondOperand = Number(calculator.displayValue);
+  }
+
   calculator.result = calculate(
     calculator.operator,
     calculator.firstOperand,
     calculator.secondOperand
   );
+
+  // Semi reset after evaluation
+  calculator.firstOperand = calculator.result;
+  calculator.operator = null;
+  calculator.secondOperand = null;
   calculator.displayValue = calculator.result;
 }
 
