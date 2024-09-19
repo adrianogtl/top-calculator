@@ -37,7 +37,7 @@ function concatNumber(buttonValue) {
   if (calculator.displayValue === "0") {
     calculator.displayValue = buttonValue;
   } else {
-    if (calculator.operator !== null) {
+    if (calculator.result !== null) {
       calculator.displayValue = "";
     }
     calculator.displayValue += buttonValue;
@@ -64,6 +64,10 @@ function handleOperatorButton(buttonValue) {
 }
 
 function handleEqualsButton() {
+  if (calculator.firstOperand === null || calculator.operator === null) {
+    return;
+  }
+
   if (calculator.secondOperand === null) {
     calculator.secondOperand = Number(calculator.displayValue);
   }
@@ -117,7 +121,7 @@ function calculate(operator, operand1, operand2) {
       result = multiply(operand1, operand2);
       break;
     case "/":
-      if (operand2 === "0") return "LOL";
+      if (operand2 === 0) return "LOL";
       result = divide(operand1, operand2);
       break;
     default:
@@ -132,7 +136,7 @@ const resetCalculator = () => {
     operator: null,
     firstOperand: null,
     secondOperand: null,
-    result: 0,
+    result: null,
   };
 };
 
