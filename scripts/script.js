@@ -14,8 +14,12 @@ function handleButtonEvent(event) {
     handleEqualsButton();
   }
 
-  if (button.classList.contains("clear")) {
+  if (button.classList.contains("all-clear")) {
     resetCalculator();
+  }
+
+  if (button.classList.contains("clear")) {
+    calculator.displayValue = "0";
   }
 
   if (button.classList.contains("dot")) {
