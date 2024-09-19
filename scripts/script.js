@@ -40,6 +40,7 @@ function concatNumber(buttonValue) {
     if (calculator.result !== null) {
       calculator.displayValue = "";
     }
+    calculator.result = null;
     calculator.displayValue += buttonValue;
   }
 }
